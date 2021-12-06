@@ -1,0 +1,28 @@
+Problem link on lintcode:https://www.lintcode.com/problem/919/
+Problem lonk on leetcode:https://leetcode.com/problems/meeting-rooms-ii/
+
+
+"""
+Definition of Interval.
+class Interval(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+"""
+from heapq import *
+class Solution:
+    """
+    @param intervals: an array of meeting time intervals
+    @return: the minimum number of conference rooms required
+    """
+    def minMeetingRooms(self, intervals):
+        # Write your code here
+        min_rooms=0
+        intervals.sort(key=lambda x:x.start)
+        min_heap=[]
+        for i in intervals:
+            while (len(min_heap)>0 and  i.start>=min_heap[0][0]):
+                heappop(min_heap)
+            heappush(min_heap,[i.end,i.start])
+            min_rooms=max(min_rooms,len(min_heap))
+        return min_rooms
