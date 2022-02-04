@@ -1,0 +1,40 @@
+Problem link on leetcode: https://leetcode.com/problems/word-squares/
+Problem link on lintcode: https://www.lintcode.com/problem/634
+
+class Solution:
+    def wordSquares(self, words):
+        def backtrack(row_no,temp_list,n):
+            if len(temp_list)==n:
+                result.append(temp_list[:])
+                return
+
+            prefix=""
+            for i in temp_list:
+                prefix+=i[row_no]
+
+            prefix_list=[]
+            if prefix in hashmap:
+                prefix_list=hashmap[prefix]
+
+            for word in prefix_list:
+                temp_list.append(word)
+                backtrack(row_no+1,temp_list,n)
+                temp_list.pop()
+
+        hashmap={}
+        for i in words:
+            for j in range(1,len(i)):
+                hashmap[i[0:j]]=[]
+        for i in hashmap:
+            for j in words:
+                if j[:len(i)]==i:
+                    hashmap[i].append(j)
+
+        result=[]
+        for i in words:
+            ans=[]
+            ans.append(i)
+            backtrack(1,ans,len(i))
+        return result
+        
+        
