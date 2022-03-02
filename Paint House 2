@@ -1,2 +1,24 @@
 Problem Link: https://www.lintcode.com/problem/516
 
+
+-------------------------------Giving TLE on lintcode
+class Solution:
+    """
+    @param costs: n x k cost matrix
+    @return: an integer, the minimum cost to paint all houses
+    """
+    def minCostII(self, costs):
+        # write your code here
+        n=len(costs)
+        
+        if n == 0:
+            return 0
+        houses=len(costs[0])
+        for i in range(1,n):
+            for h in range(houses):
+                min_cost=float('inf')
+                for m in range(houses):
+                    if m!=h:
+                        min_cost=min(min_cost,costs[i-1][m])
+                costs[i][h]+=min_cost
+        return min(costs[-1])
