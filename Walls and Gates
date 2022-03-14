@@ -1,0 +1,39 @@
+Problem Link on Lintcode : https://www.lintcode.com/problem/663/
+
+from queue import deque
+from typing import (
+    List,
+)
+
+class Solution:
+    """
+    @param rooms: m x n 2D grid
+    @return: nothing
+    """
+    def walls_and_gates(self, rooms: List[List[int]]):
+        # write your code here
+        queue=deque()
+        for i in range(len(rooms)):
+            for j in range(len(rooms[0])):
+                if rooms[i][j]==0:
+                    queue.append([i,j,0])
+        
+        while queue:
+            i,j,time=queue.popleft()
+            if i-1>=0 and rooms[i-1][j]==2147483647:
+                rooms[i-1][j]=min(rooms[i-1][j],time+1)
+                queue.append([i-1,j,time+1])
+
+            if j-1>=0 and rooms[i][j-1]==2147483647:
+                rooms[i][j-1]=min(rooms[i][j-1],time+1)
+                queue.append([i,j-1,time+1])
+
+            if j+1<=len(rooms[0])-1 and rooms[i][j+1]==2147483647:
+                rooms[i][j+1]=min(rooms[i][j+1],time+1)
+                queue.append([i,j+1,time+1])
+
+            if i+1<=len(rooms)-1 and rooms[i+1][j]==2147483647:
+                rooms[i+1][j]=min(rooms[i+1][j],time+1)
+                queue.append([i+1,j,time+1])
+            
+        return rooms
