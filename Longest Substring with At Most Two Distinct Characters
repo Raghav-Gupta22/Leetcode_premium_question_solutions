@@ -1,0 +1,30 @@
+Problem Link on Lintcode: https://www.lintcode.com/problem/longest-substring-with-at-most-two-distinct-characters
+Problem Link on Leetcode: https://leetcode.com/problems/longest-substring-with-at-most-two-distinct-characters/
+
+
+class Solution:
+    """
+    @param s: a string
+    @return: the length of the longest substring T that contains at most 2 distinct characters
+    """
+    def length_of_longest_substring_two_distinct(self, s: str) -> int:
+        # Write your code here
+        h={}
+        l=0
+        ws=0
+        we=0
+        while we<len(s):
+            if s[we] in h:
+                h[s[we]]+=1
+            else:
+                h[s[we]]=1
+            
+            if len(h)<=2:
+                l=max(l,we-ws+1)
+            else:
+                h[s[ws]]-=1
+                if h[s[ws]]<=0:
+                    h.pop(s[ws])
+                ws+=1
+            we+=1
+        return l
