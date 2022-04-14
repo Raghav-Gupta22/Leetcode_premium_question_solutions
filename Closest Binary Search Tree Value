@@ -1,0 +1,26 @@
+Problem Link on lintcode :https://www.lintcode.com/problem/900/
+class Solution:
+    """
+    @param root: the given BST
+    @param target: the given target
+    @return: the value in the BST that is closest to the target
+    """
+    def closest_value(self, root, target):
+        # write your code here
+        def search(root):
+            nonlocal closest
+            nonlocal value
+            if root==None:
+                return
+            if abs(root.val-target)<=closest:
+                closest=abs(root.val-target)
+                value=root.val
+
+            if target>root.val:
+                search(root.right)
+            elif target<root.val:
+                search(root.left)
+        closest=math.inf
+        value=0
+        search(root)
+        return value
